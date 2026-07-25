@@ -13,6 +13,7 @@ tools = ToolServer()
 
 handles = {"temp": -1, "pmv": -1, "outdoor": -1, "heat_act": -1, "cool_act": -1}
 call_count = [0]
+setpoint_log = []
 
 # throttle LLM calls: only ask the LLM once every N zone timesteps, since
 # each call takes real wall-clock seconds and we don't want to slow the
@@ -72,6 +73,15 @@ def my_callback(state):
           f"zone_temp={zc['zone_temperature_c']}C  pmv={zc['zone_pmv']}  "
           f"-> LLM setpoints=({tools.heating_setpoint}, {tools.cooling_setpoint})")
 
+    setpoint_log.append({
+        "sim_time": sc["sim_time"],
+        "month": ex.month(state),
+        "day": ex.day_of_month(state),
+        "hour": ex.hour(state),
+        "heating_setpoint": tools.heating_setpoint,
+        "cooling_setpoint": tools.cooling_setpoint,
+    })
+
 api.runtime.callback_begin_zone_timestep_after_init_heat_balance(state, my_callback)
 
 args = [
@@ -81,3 +91,10 @@ args = [
 ]
 
 api.runtime.run_energyplus(state, args)
+
+import csv
+with open("llm_setpoint_log.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=["sim_time", "month", "day", "hour", "heating_setpoint", "cooling_setpoint"])
+    writer.writeheader()
+    writer.writerows(setpoint_log)
+print(f"Saved {len(setpoint_log)} setpoint decisions to llm_setpoint_log.csv")

@@ -15,6 +15,13 @@ comfort (PMV), and outdoor conditions every simulated hour, then proposing
 heating/cooling setpoints through a validated tool-calling interface before
 writing them back into the running simulation.
 
+## Repository Note
+
+`dev_validation_scripts/` contains earlier incremental scripts used to
+validate each piece of the pipeline independently (sensor reads, actuator
+writes, tool validation) during development. The unified, final system is
+`tools.py` + `llm_decide.py` + `llm_control.py`.
+
 ## Results
 
 Compared against the building's original fixed-schedule baseline over a

@@ -1,0 +1,8 @@
+results/
+results_llm_control/
+results_tool_test/
+results_control_test/
+*.txt
+ExampleFiles/
+WeatherData/
+__pycache__/

@@ -1,8 +1,7 @@
 # Eco-Loop: LLM-Driven Closed-Loop HVAC Control via EnergyPlus Co-Simulation
 
-**Problem Statement:** [FILL IN - PS ID / Title]
-**Theme:** [FILL IN]
-**Author:** [Your Name]
+**Problem Statement:** ECO LOOP  BUILDING AGENTS
+**Author:** PAULOSTA KARMAKAR
 
 ## Overview
 

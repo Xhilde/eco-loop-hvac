@@ -1,6 +1,6 @@
 # Eco-Loop Building Agents — System Architecture Document
 
-**Author:** [Your Name]
+**Author:** PAULOSTA KARMAKAR
 **Problem Statement:** Eco-Loop Building Agents
 
 ## 1. Overview

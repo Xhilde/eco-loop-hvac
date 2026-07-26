@@ -41,8 +41,8 @@ This separation means the EnergyPlus-facing code (`llm_control.py`) never
 needs to know *how* a decision was made — the LLM could be swapped for a
 different model, a rule-based controller, or a human operator without
 changing the simulation wiring at all. This was validated directly: the
-project includes both an LLM-backed decision path and an earlier
-rule-based placeholder (`tool_test.py`), both driving the exact same
+project includes both an LLM-backed decision path and earlier rule-based
+placeholders in `dev_validation_scripts/`, both driving the exact same
 `ToolServer` interface.
 
 ## 3. Prompt Engineering Strategy
@@ -121,7 +121,10 @@ AI-controlled operation reduced total electricity consumption by 5.8%
 (16,142.2 kWh -> 15,198.7 kWh) while simultaneously reducing thermal
 comfort violations (|PMV| > 0.5) from 40.0% to 23.1% of timesteps —
 demonstrating the closed loop improved energy efficiency and occupant
-comfort together rather than trading one for the other.
+comfort together rather than trading one for the other. This AI-controlled
+setpoint sequence is embedded directly in `idf/ai_controlled.idf` (see
+`export_modified_idf.py`), allowing it to be re-run independently of the
+live LLM/Ollama loop.
 
 ## 7. Known Limitations / Future Work
 

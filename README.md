@@ -14,6 +14,10 @@ comfort (PMV), and outdoor conditions every simulated hour, then proposing
 heating/cooling setpoints through a validated tool-calling interface before
 writing them back into the running simulation.
 
+## Demo Video
+
+[Watch the PoC demo video](Honeywell_Video.mp4) (GitHub-hosted, ~41MB)
+
 ## Repository Note
 
 `dev_validation_scripts/` contains earlier incremental scripts used to
@@ -39,7 +43,6 @@ other.
 ![Results comparison](results_comparison_chart.png)
 
 ## Architecture
-
 EnergyPlus Simulation
 |
 v
@@ -54,7 +57,6 @@ back to EnergyPlus via Actuator API, holds last
 known-good setpoint on failure/rejection)
 |
 +----------------> loops back to EnergyPlus for next timestep
-
 ## Tech Stack
 
 - **Python 3.12**
@@ -68,25 +70,33 @@ known-good setpoint on failure/rejection)
 
 ## Repository Structure
 idf/baseline.idf - building model (RunPeriod trimmed to demo week)
+idf/ai_controlled.idf - building model with AI-generated setpoint schedule
 weather/chicago.epw - weather file
 tools.py - ToolServer: validated read/write interface
 llm_decide.py - LLM decision logic (Ollama client)
 llm_control.py - full closed loop: EnergyPlus <-> tools <-> LLM
-control_test.py, tool_test.py - earlier development/validation scripts
+run_baseline.py - runs the baseline (fixed schedule) simulation
+dev_validation_scripts/ - earlier incremental development/validation scripts
 dashboard.py - baseline vs AI comparison analysis
 make_chart.py - generates results_comparison_chart.png
+export_modified_idf.py - exports idf/ai_controlled.idf from llm_setpoint_log.csv
+llm_setpoint_log.csv - logged LLM setpoint decisions from the AI-controlled run
 results_comparison_chart.png - final results chart
+Honeywell_Video.mp4 - PoC demo video
+SYSTEM_ARCHITECTURE.md - system architecture document
+SAVINGS_DASHBOARD.md - standalone quantitative savings dashboard
 
 ## How to Run
 
 1. Install [EnergyPlus 26.1](https://github.com/NREL/EnergyPlus/releases)
    and [Ollama](https://ollama.com), then `ollama pull llama3.2`.
-2. Update `EPLUS_ROOT` at the top of `llm_control.py` / `tool_test.py` to
+2. Update `EPLUS_ROOT` at the top of `llm_control.py` / `run_baseline.py` to
    your EnergyPlus install path.
 3. Run baseline: `python run_baseline.py`
 4. Run AI-controlled: `python llm_control.py`
 5. Compare results: `python dashboard.py`
 6. Generate chart: `python make_chart.py`
+7. Export AI-controlled IDF: `python export_modified_idf.py`
 
 ## Key Design Decisions
 

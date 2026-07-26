@@ -16,7 +16,7 @@ writing them back into the running simulation.
 
 ## Demo Video
 
-[Watch the PoC demo video](Honeywell_Video.mp4) (GitHub-hosted, ~41MB)
+[Watch the PoC demo video](honeywell_compressed_final.mp4) (GitHub-hosted, ~41MB)
 
 ## Repository Note
 
